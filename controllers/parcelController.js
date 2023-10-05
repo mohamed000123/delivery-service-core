@@ -1,6 +1,7 @@
 import { Parcel } from "../models/parcel.js";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
+import { Op } from "sequelize";
 dotenv.config();
 
 export const createParcel = (req, res) => {
@@ -11,7 +12,7 @@ export const createParcel = (req, res) => {
     pickupAddress,
     deliveryAddress,
     userId,
-    status:"created"
+    status: "created",
   };
   Parcel.create(newParcel)
     .then(() => {
@@ -22,6 +23,33 @@ export const createParcel = (req, res) => {
       res.status(400).json(message);
     });
 };
-export const updateStatus = (req, res) => {
-    
+export const getParcels = (req, res) => {
+  Parcel.findAll({
+    where: {
+      status: { [Op.ne]: "pickedUp" },
+    },
+  })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((e) => {
+      res.status(200).json(e);
+    });
+};
+export const pickedUp = (req, res) => {
+  const bikerId = "4f8565bc-55c9-4150-95d3-695e27641d0a";
+  Parcel.update(
+    { status: "pickedUp",bikerId },
+    {
+      where: {
+        id: req.params.id,
+      },
+    }
+  )
+    .then(() => {
+      return res.status(200).json(`parcel has been picked up successfully `);
+    })
+    .catch((e) => {
+      return res.status(500).json(`something went wrong" ${e}`);
+    });
 };
