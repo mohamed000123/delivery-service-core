@@ -1,7 +1,9 @@
 import express from "express";
 import { sequelize } from "./models/dbConnection.js";
 import authRouter from "./routes/authRoute.js";
-import cors from "cors"
+import parcelRouter from "./routes/parcelRoute.js";
+import bikerRouter from "./routes/bikerRoute.js";
+import cors from "cors";
 const app = express();
 sequelize
   .authenticate()
@@ -18,3 +20,5 @@ app.use(express.json());
 app.use(cors());
 // auth route
 app.use("/", authRouter);
+// parcel route
+app.use("/parcel", parcelRouter);

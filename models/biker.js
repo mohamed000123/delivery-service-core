@@ -1,6 +1,6 @@
 import { sequelize } from "./dbConnection.js";
 import { Sequelize } from "sequelize";
-import { Order } from "./order.js";
+
 
 export const Biker = sequelize.define(
   "biker",
@@ -34,5 +34,4 @@ export const Biker = sequelize.define(
   }
 );
 
-Biker.belongsTo(Order);
 Biker.sync();

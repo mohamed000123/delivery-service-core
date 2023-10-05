@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User } from "../models/user.js";
 import { Biker } from "./../models/biker.js";
+import { v4 as uuidv4 } from 'uuid';
 import dotenv from "dotenv";
 dotenv.config();
 function createToken(id) {
@@ -48,10 +49,10 @@ export const login = (req, res) => {
 };
 export async function signup(req, res) {
   const newUser = {
-    id: req.body.id,
     email: req.body.email,
     password: req.body.password,
   };
+  newUser.id = uuidv4();
   // password hashing
   const salt = await bcrypt.genSalt();
   newUser.password = await bcrypt.hash(newUser.password, salt);

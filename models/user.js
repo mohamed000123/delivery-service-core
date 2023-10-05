@@ -1,7 +1,6 @@
-
 import { sequelize } from "./dbConnection.js";
 import { Sequelize } from "sequelize";
-import { Order } from "./order.js";
+
 
 export const User = sequelize.define(
   "user",
@@ -31,9 +30,8 @@ export const User = sequelize.define(
     },
   },
   {
-    timestamps : false
+    timestamps: false,
   }
 );
 
-User.belongsTo(Order);
 User.sync();
