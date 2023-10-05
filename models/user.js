@@ -1,9 +1,10 @@
+
 import { sequelize } from "./dbConnection.js";
 import { Sequelize } from "sequelize";
 import { Order } from "./order.js";
 
-export const Biker = sequelize.define(
-  "biker",
+export const User = sequelize.define(
+  "user",
   {
     id: {
       type: Sequelize.STRING,
@@ -30,9 +31,9 @@ export const Biker = sequelize.define(
     },
   },
   {
-    timestamps: false,
+    timestamps : false
   }
 );
 
-Biker.belongsTo(Order);
-Biker.sync();
+User.belongsTo(Order);
+User.sync();

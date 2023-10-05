@@ -1,6 +1,7 @@
 import express from "express";
 import { sequelize } from "./models/dbConnection.js";
-
+import authRouter from "./routes/authRoute.js";
+import cors from "cors"
 const app = express();
 sequelize
   .authenticate()
@@ -12,3 +13,8 @@ sequelize
   .catch((e) => {
     console.log("error connecting to db", e);
   });
+// middelwares
+app.use(express.json());
+app.use(cors());
+// auth route
+app.use("/", authRouter);
