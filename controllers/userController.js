@@ -4,25 +4,28 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const createParcel = (req, res) => {
-  const { name, pickupAddress, deliveryAddress } = req.body;
-  const userId = req.userId;
-  const newParcel = {
-    id: uuidv4(),
-    name,
-    pickupAddress,
-    deliveryAddress,
-    userId,
-    status: "created",
-  };
-  Parcel.create(newParcel)
-    .then(() => {
-      res
-        .status(200)
-        .json({ message: "parcel created successfully", success: "true" });
-    })
-    .catch((e) => {
-      console.log(e);
-      let message = e.errors[0].message;
-      res.status(400).json(message);
-    });
+  if (req.type == "User") {
+    const { name, pickupAddress, deliveryAddress } = req.body;
+    const userId = req.userId;
+    const newParcel = {
+      id: uuidv4(),
+      name,
+      pickupAddress,
+      deliveryAddress,
+      userId,
+      status: "created",
+    };
+    Parcel.create(newParcel)
+      .then(() => {
+        res
+          .status(200)
+          .json({ message: "parcel created successfully", success: "true" });
+      })
+      .catch((e) => {
+        console.log(e);
+        res.status(500).json(e);
+      });
+  } else {
+   res.status(500).json("wrong credentials");
+  }
 };

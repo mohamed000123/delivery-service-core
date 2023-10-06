@@ -4,20 +4,26 @@ import { v4 as uuidv4 } from "uuid";
 import { Op } from "sequelize";
 dotenv.config();
 
-
 export const getUserParcels = (req, res) => {
-  const userId = req.params.id
-  Parcel.findAll({
-    where: {
-      userId:userId,
-    },
-  })
-    .then((data) => {
-      res.status(200).json(data);
-    })
-    .catch((e) => {
-      res.status(200).json(e);
-    });
+  try {
+    if (req.type == "User") {
+      Parcel.findAll({
+        where: {
+          userId: req.userId,
+        },
+      })
+        .then((data) => {
+          res.status(200).json(data);
+        })
+        .catch((e) => {
+          res.status(500).json(e);
+        });
+    } else {
+      res.status(500).json("wrong credentials");
+    }
+  } catch (e) {
+    console.log("error", e);
+  }
 };
 export const getParcels = (req, res) => {
   Parcel.findAll({
@@ -32,4 +38,3 @@ export const getParcels = (req, res) => {
       res.status(200).json(e);
     });
 };
-

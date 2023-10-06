@@ -5,7 +5,7 @@ import {
 } from "../controllers/parcelController.js";
 const router = express.Router();
 router.get("/all-parcels", getParcels);
-router.get("/all-parcels/user/:id", getUserParcels);
+router.get("/all-parcels/user", getUserParcels);
 
 
 export default router;
