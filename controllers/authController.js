@@ -5,8 +5,8 @@ import { Biker } from "./../models/biker.js";
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from "dotenv";
 dotenv.config();
-function createToken(id) {
-  return jwt.sign({ id }, process.env.SECRET_KEY, { expiresIn: 3600 });
+function createToken(id,type) {
+  return jwt.sign({ id, type }, process.env.SECRET_KEY, { expiresIn: 3600 });
 }
 
 export const login = (req, res) => {
@@ -28,7 +28,7 @@ export const login = (req, res) => {
       if (user) {
         bcrypt.compare(password, user.password).then((result) => {
           if (result) {
-            const token = createToken(user.id);
+            const token = createToken(user.id, type);
             res.cookie("jwt", token, {
               maxAge: 1000 * 3600,
               sameSite: "none",
@@ -67,7 +67,7 @@ export async function signup(req, res) {
   collection
     .create(newUser)
     .then(() => {
-      const token = createToken(newUser.id);
+      const token = createToken(newUser.id, type);
       res.cookie("jwt", token, {
         maxAge: 1000 * 3600,
         sameSite: "none",

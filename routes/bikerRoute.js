@@ -1,7 +1,7 @@
 import express from "express";
-import {  } from "../controllers/bikerController.js";
+import { pickUp } from "../controllers/bikerController.js";
 const router = express.Router();
-// router.post("/login", login);
+router.get("/pickup/parcel/:id", pickUp);
 
 
 export default router;

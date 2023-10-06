@@ -1,8 +1,6 @@
 import express from "express";
-import { login, signup, logout } from "../controllers/userController.js";
+import { createParcel } from "../controllers/userController.js";
 const router = express.Router();
-router.post("/login", login);
-router.post("/signup", signup);
-router.get("/logout", logout);
+router.post("/create-parcel", createParcel);
 
 export default router;

@@ -2,6 +2,8 @@ import express from "express";
 import { sequelize } from "./models/dbConnection.js";
 import authRouter from "./routes/authRoute.js";
 import parcelRouter from "./routes/parcelRoute.js";
+import bikerRouter from "./routes/bikerRoute.js"
+import userRoute from "./routes/userRoute.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authCheck from "./middleware/authMiddelware.js";
@@ -28,4 +30,8 @@ app.use(
 // auth route
 app.use("/", authRouter);
 // parcel route
-app.use("/parcel", authCheck, parcelRouter);
+app.use("/", authCheck, parcelRouter);
+// biker route
+app.use("/", authCheck, bikerRouter);
+// user route
+app.use("/", authCheck, userRoute);

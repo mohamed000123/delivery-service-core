@@ -9,7 +9,9 @@ const authCheck = (req, res, next) => {
         res.json("authorization error please try to log in again");
       } else {
         const userId = decodedToken.id;
+        const type = decodedToken.type;
         req.userId=userId
+        req.type=type
         next();
       }
     });
