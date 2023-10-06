@@ -5,10 +5,11 @@ import { Op } from "sequelize";
 dotenv.config();
 
 export const createParcel = (req, res) => {
-  const { pickupAddress, deliveryAddress } = req.body;
-  const userId = "0f0a1bab-9de9-4ad3-b940-85810f80f65f";
+  const { name, pickupAddress, deliveryAddress } = req.body;
+  const userId = req.userId;
   const newParcel = {
     id: uuidv4(),
+    name,
     pickupAddress,
     deliveryAddress,
     userId,
@@ -16,11 +17,26 @@ export const createParcel = (req, res) => {
   };
   Parcel.create(newParcel)
     .then(() => {
-      res.status(200).json("parcel created successfully");
+      res.status(200).json({ message: "parcel created successfully", success: "true" });
     })
     .catch((e) => {
+      console.log(e);
       let message = e.errors[0].message;
       res.status(400).json(message);
+    });
+};
+export const getUserParcels = (req, res) => {
+  const userId = req.params.id
+  Parcel.findAll({
+    where: {
+      userId:userId,
+    },
+  })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((e) => {
+      res.status(200).json(e);
     });
 };
 export const getParcels = (req, res) => {
@@ -39,7 +55,7 @@ export const getParcels = (req, res) => {
 export const pickedUp = (req, res) => {
   const bikerId = "4f8565bc-55c9-4150-95d3-695e27641d0a";
   Parcel.update(
-    { status: "pickedUp",bikerId },
+    { status: "pickedUp", bikerId },
     {
       where: {
         id: req.params.id,

@@ -9,6 +9,10 @@ export const Parcel = sequelize.define(
       type: Sequelize.STRING,
       primaryKey: true,
     },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     status: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -29,4 +33,5 @@ export const Parcel = sequelize.define(
 Parcel.belongsTo(User);
 Parcel.belongsTo(Biker);
 Parcel.sync();
+
 

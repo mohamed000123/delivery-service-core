@@ -4,6 +4,7 @@ import authRouter from "./routes/authRoute.js";
 import parcelRouter from "./routes/parcelRoute.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import authCheck from "./middleware/authMiddelware.js";
 const app = express();
 sequelize
   .authenticate()
@@ -16,6 +17,7 @@ sequelize
     console.log("error connecting to db", e);
   });
 // middelwares
+app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
@@ -23,8 +25,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
 // auth route
 app.use("/", authRouter);
 // parcel route
-app.use("/parcel", parcelRouter);
+app.use("/parcel", authCheck, parcelRouter);
