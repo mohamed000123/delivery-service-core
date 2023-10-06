@@ -30,9 +30,9 @@ export const login = (req, res) => {
           if (result) {
             const token = createToken(user.id);
             res.cookie("jwt", token, {
-              httpOnly: true,
               maxAge: 1000 * 3600,
-              // secure: true,
+              sameSite: "none",
+              secure: true,
             });
             res.status(201).json({ userId: user.id });
           } else {
@@ -69,8 +69,9 @@ export async function signup(req, res) {
     .then(() => {
       const token = createToken(newUser.id);
       res.cookie("jwt", token, {
-        httpOnly: true,
         maxAge: 1000 * 3600,
+        sameSite: "none",
+        secure: true,
       });
       res.status(201).json({ userId: newUser.id });
     })
@@ -81,9 +82,9 @@ export async function signup(req, res) {
 }
 export const logout = (req, res) => {
   res.cookie("jwt", "", {
-    httpOnly: true,
     maxAge: 1,
-    // secure: true,
+    sameSite: "none",
+    secure: true,
   });
-  res.redirect("/login");
+  res.json("logged out successfully")
 };

@@ -2,7 +2,7 @@ import express from "express";
 import { sequelize } from "./models/dbConnection.js";
 import authRouter from "./routes/authRoute.js";
 import parcelRouter from "./routes/parcelRoute.js";
-import bikerRouter from "./routes/bikerRoute.js";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 const app = express();
 sequelize
@@ -17,7 +17,13 @@ sequelize
   });
 // middelwares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 // auth route
 app.use("/", authRouter);
 // parcel route
