@@ -29,3 +29,11 @@ export const pickUp = (req, res) => {
     console.log(err);
   }
 };
+
+export const bikerParcels = ()=>{
+  try {
+    
+  } catch (error) {
+    console.log(error);
+  }
+}

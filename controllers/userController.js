@@ -29,3 +29,25 @@ export const createParcel = (req, res) => {
    res.status(500).json("wrong credentials");
   }
 };
+
+export const getUserParcels = (req, res) => {
+  try {
+    if (req.type == "User") {
+      Parcel.findAll({
+        where: {
+          userId: req.userId,
+        },
+      })
+        .then((data) => {
+          res.status(200).json(data);
+        })
+        .catch((e) => {
+          res.status(500).json(e);
+        });
+    } else {
+      res.status(500).json("wrong credentials");
+    }
+  } catch (e) {
+    console.log("error", e);
+  }
+};
