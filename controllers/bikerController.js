@@ -56,6 +56,32 @@ export const bikerParcels = (req, res) => {
     console.log("error", e);
   }
 };
+export const delivered = (req, res) => {
+  try {
+    if (req.type == "Biker") {
+      Parcel.findAll({
+        where: [
+          {
+            bikerId: req.userId,
+          },
+          {
+            status: "delivered",
+          },
+        ],
+      })
+        .then((data) => {
+          res.status(200).json(data);
+        })
+        .catch((e) => {
+          res.status(500).json(e);
+        });
+    } else {
+      res.status(500).json("wrong credentials");
+    }
+  } catch (e) {
+    console.log("error", e);
+  }
+};
 
 export const deliver = (req, res) => {
   try {
