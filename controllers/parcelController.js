@@ -7,7 +7,9 @@ dotenv.config();
 export const getParcels = (req, res) => {
   Parcel.findAll({
     where: {
-      status:"created" }
+      status: "created",
+    },
+    order: [["createdAt", "DESC"]],
   })
     .then((data) => {
       res.status(200).json(data);

@@ -5,15 +5,17 @@ dotenv.config();
 
 export const createParcel = (req, res) => {
   if (req.type == "User") {
-    const { name, pickupAddress, deliveryAddress } = req.body;
+    const { title, description,pickupAddress, deliveryAddress } = req.body;
     const userId = req.userId;
     const newParcel = {
       id: uuidv4(),
-      name,
+      title,
+      description,
       pickupAddress,
       deliveryAddress,
       userId,
       status: "created",
+      createdAt: new Date(),
     };
     Parcel.create(newParcel)
       .then(() => {
@@ -37,6 +39,7 @@ export const getUserParcels = (req, res) => {
         where: {
           userId: req.userId,
         },
+        order: [["createdAt", "DESC"]],
       })
         .then((data) => {
           res.status(200).json(data);

@@ -9,9 +9,13 @@ export const Parcel = sequelize.define(
       type: Sequelize.STRING,
       primaryKey: true,
     },
-    name: {
+    title: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     status: {
       type: Sequelize.STRING,
@@ -25,13 +29,17 @@ export const Parcel = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-  },
-  {
-    timestamps: true,
+    createdAt:{
+      type:Sequelize.DATE,
+    },
+    pickUpDate:{
+      type:Sequelize.DATE,
+    },
+    deliveryDate:{
+      type:Sequelize.DATE,
+    },
   }
 );
 Parcel.belongsTo(User);
 Parcel.belongsTo(Biker);
 Parcel.sync();
-
-

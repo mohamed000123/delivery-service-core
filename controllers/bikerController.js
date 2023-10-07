@@ -7,7 +7,7 @@ export const pickUp = (req, res) => {
     if (req.type == "Biker") {
       const bikerId = req.userId;
       Parcel.update(
-        { status: "pickedUp", bikerId },
+        { status: "pickedUp", bikerId, pickUpDate: new Date() },
         {
           where: {
             id: req.params.id,
@@ -42,6 +42,7 @@ export const bikerParcels = (req, res) => {
             status: "pickedUp",
           },
         ],
+        order: [["createdAt", "DESC"]],
       })
         .then((data) => {
           res.status(200).json(data);
@@ -68,6 +69,7 @@ export const delivered = (req, res) => {
             status: "delivered",
           },
         ],
+        order: [["createdAt", "DESC"]],
       })
         .then((data) => {
           res.status(200).json(data);
@@ -87,7 +89,7 @@ export const deliver = (req, res) => {
   try {
     if (req.type == "Biker") {
       Parcel.update(
-        { status: "delivered"},
+        { status: "delivered", deliveryDate: new Date() },
         {
           where: {
             id: req.params.id,
