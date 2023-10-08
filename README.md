@@ -18,7 +18,11 @@ delivery-service app with these features
 * run npm i command
 * run nodemon index.js command
 * add .env file with this structure
-        DB_USER=<your MYSQL database user name>
-        DB_PASSWORD=<your MYSQL database password>
-        SECRET_KEY= <any string>  (add any secret key for jwt signature)
+  
+        DB_USER = (your MYSQL database user name)
+  
+        DB_PASSWORD = (your MYSQL database password)
+  
+        SECRET_KEY = (any string)  (add any secret key for jwt signature)
+  
 * if you are using any other SQL DB you can replace it with MYSQL in sequlize config file (/models/dbConnection.js)
