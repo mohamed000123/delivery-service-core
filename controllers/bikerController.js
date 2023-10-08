@@ -1,13 +1,15 @@
 import { Parcel } from "../models/parcel.js";
+import { userTypes } from "../enum/userTypes.js";
+import { parcelStatus } from "../enum/parcelStatus.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 export const pickUp = (req, res) => {
   try {
-    if (req.type == "Biker") {
+    if (req.type == userTypes.Biker) {
       const bikerId = req.userId;
       Parcel.update(
-        { status: "pickedUp", bikerId, pickUpDate: new Date() },
+        { status: parcelStatus.pickedUp, bikerId, pickUpDate: new Date() },
         {
           where: {
             id: req.params.id,
@@ -32,14 +34,14 @@ export const pickUp = (req, res) => {
 
 export const bikerParcels = (req, res) => {
   try {
-    if (req.type == "Biker") {
+    if (req.type == userTypes.Biker) {
       Parcel.findAll({
         where: [
           {
             bikerId: req.userId,
           },
           {
-            status: "pickedUp",
+            status: parcelStatus.pickedUp,
           },
         ],
         order: [["createdAt", "DESC"]],
@@ -59,14 +61,14 @@ export const bikerParcels = (req, res) => {
 };
 export const delivered = (req, res) => {
   try {
-    if (req.type == "Biker") {
+    if (req.type == userTypes.Biker) {
       Parcel.findAll({
         where: [
           {
             bikerId: req.userId,
           },
           {
-            status: "delivered",
+            status: delivered.delivered,
           },
         ],
         order: [["createdAt", "DESC"]],
@@ -87,9 +89,9 @@ export const delivered = (req, res) => {
 
 export const deliver = (req, res) => {
   try {
-    if (req.type == "Biker") {
+    if (req.type == userTypes.Biker) {
       Parcel.update(
-        { status: "delivered", deliveryDate: new Date() },
+        { status: delivered.delivered, deliveryDate: new Date() },
         {
           where: {
             id: req.params.id,

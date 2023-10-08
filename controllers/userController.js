@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const createParcel = (req, res) => {
-  if (req.type == "User") {
-    const { title, description,pickupAddress, deliveryAddress } = req.body;
+  if (req.type == userTypes.User) {
+    const { title, description, pickupAddress, deliveryAddress } = req.body;
     const userId = req.userId;
     const newParcel = {
       id: uuidv4(),
@@ -14,7 +14,7 @@ export const createParcel = (req, res) => {
       pickupAddress,
       deliveryAddress,
       userId,
-      status: "created",
+      status: parcelStatus.created,
       createdAt: new Date(),
     };
     Parcel.create(newParcel)
@@ -28,13 +28,13 @@ export const createParcel = (req, res) => {
         res.status(500).json(e);
       });
   } else {
-   res.status(500).json("wrong credentials");
+    res.status(500).json("wrong credentials");
   }
 };
 
 export const getUserParcels = (req, res) => {
   try {
-    if (req.type == "User") {
+    if (req.type == userTypes.User) {
       Parcel.findAll({
         where: {
           userId: req.userId,

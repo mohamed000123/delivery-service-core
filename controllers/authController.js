@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User } from "../models/user.js";
+import { userTypes } from "../enum/userTypes.js";
 import { Biker } from "./../models/biker.js";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 dotenv.config();
-function createToken(id,type) {
+function createToken(id, type) {
   return jwt.sign({ id, type }, process.env.SECRET_KEY, { expiresIn: 3600 });
 }
 
@@ -13,9 +14,9 @@ export const login = (req, res) => {
   const { email, password, type } = req.body;
   // define user type
   let collection;
-  if (type == "Biker") {
+  if (type == userTypes.Biker) {
     collection = Biker;
-  } else if (type == "User") {
+  } else if (type == userTypes.User) {
     collection = User;
   }
   collection
@@ -59,9 +60,9 @@ export async function signup(req, res) {
   // define user type
   const type = req.body.type;
   let collection;
-  if (type == "Biker") {
+  if (type == userTypes.Biker) {
     collection = Biker;
-  } else if (type == "User") {
+  } else if (type == userTypes.User) {
     collection = User;
   }
   collection
@@ -86,5 +87,5 @@ export const logout = (req, res) => {
     sameSite: "none",
     secure: true,
   });
-  res.json("logged out successfully")
+  res.json("logged out successfully");
 };

@@ -1,13 +1,12 @@
 import { Parcel } from "../models/parcel.js";
 import dotenv from "dotenv";
-import { Op } from "sequelize";
+import { parcelStatus } from "../enum/parcelStatus.js";
 dotenv.config();
-
 
 export const getParcels = (req, res) => {
   Parcel.findAll({
     where: {
-      status: "created",
+      status: parcelStatus.created,
     },
     order: [["createdAt", "DESC"]],
   })
