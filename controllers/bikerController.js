@@ -68,7 +68,7 @@ export const delivered = (req, res) => {
             bikerId: req.userId,
           },
           {
-            status: delivered.delivered,
+            status: parcelStatus.delivered,
           },
         ],
         order: [["createdAt", "DESC"]],
@@ -91,7 +91,7 @@ export const deliver = (req, res) => {
   try {
     if (req.type == userTypes.Biker) {
       Parcel.update(
-        { status: delivered.delivered, deliveryDate: new Date() },
+        { status: parcelStatus.delivered, deliveryDate: new Date() },
         {
           where: {
             id: req.params.id,

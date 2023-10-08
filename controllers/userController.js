@@ -1,5 +1,7 @@
 import { Parcel } from "../models/parcel.js";
 import { v4 as uuidv4 } from "uuid";
+import { userTypes } from "../enum/userTypes.js";
+import { parcelStatus } from "../enum/parcelStatus.js";
 import dotenv from "dotenv";
 dotenv.config();
 
